@@ -12,11 +12,13 @@ destinations ={
     "mountains": ["Swiss Alps", "Rocky Mountains", "Himalayas"],
      "cities": ["Tokyo", "Paris", "New York"]
 } 
-jokes = [
-     "Why don't programmers like nature? Too many bugs!",
-"Why did the computer go to the doctor? Because it had a virus!",
-"Why do travelers always feel warm? Because of all their hot spots!"
-]
+jokes = {
+     "pun jokes": ["I am reading a book on anti-gravity. It is impossible to put down!", "I do not trust stairs.They are always up to something.", "I'm on a seafood diet.I see food and I eat it"],
+     "one Liners": ["I told my wife she was drawing her eyebrows too high. She looked surprised.", "Claustrophobic people are more productive thinking outside the box.", "Why do not skeletons fight each other?They do not have the guts."],
+     "observational jokes": ["Is not it weird how we pay money to run on treadmills and go nowhere?", "Why do we click 'I have read the terms and conditions'? We did not read a thing. That is the biggest lie on the internet.", "When people say 'I slept like a baby,'do they mean they woke up every two hours crying?"],
+     "dark humour": ["I have a joke about construction, but I am still working on it", "Do not worry if plan A does not work out.There are 25 more letters in the alphabet.", "Some people graduate with honors, I am just honored to graduate."],
+     "animal jokes": ["What do you call an alligator in a vest? An investigator.", "Why do not seagulls fly over the bay?Because then they would be bagels.", "What do frogs do with paper?Rip-it."]
+} 
 
 # # Helper function to normalize user input (remove extra spaces, make lowercase)
 def normalize_input(text):
@@ -53,7 +55,23 @@ def packing_tips():
  print(Fore.GREEN+"-Check the weather forecast")
 # Tell a random joke
 def tell_joke():
- print(Fore.YELLOW+f"TravelBot:{random.choice(jokes)}")
+ print(Fore.CYAN+"TravelBot: pun jokes, one liner jokes, dark humour, observational jokes or animal jokes?")
+ pref1=input(Fore.YELLOW+"You:")
+ pref1=normalize_input(pref1)
+ if pref1 in jokes:
+  suggestion1=random.choice(jokes[pref1])
+  print(Fore.GREEN+f"TravelBot: How about{suggestion1}?")
+  print(Fore.CYAN+"TravelBot: Do you like it? (yes/no)")
+  answer=input(Fore.YELLOW+"You:").lower()
+  if answer=="yes":
+   print(Fore.GREEN+f"TravelBot: Awsome! Enjoy {suggestion1}!")
+  elif answer=="no":
+   print(Fore.RED+f"TravelBot: Let's try another one.")
+  else:
+   print(Fore.RED+f"TravelBot: I'll suggest again.")
+ else:
+  print(Fore.RED+"TravelBot: Sorry, I don't have that type of jokes") 
+  show_help()
 # Display help menu
 def show_help():
  print(Fore.MAGENTA+"\nI can")
