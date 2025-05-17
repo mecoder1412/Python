@@ -25,6 +25,10 @@ while True:
     #Display the frame with face detection and people count
     cv2.imshow('Face Tracking and Counting', frame)  
     #exit the loop when the'q' key is pressed
+    if cv2.waitKey(1) & 0xFF==ord('s'):
+    #Save the processed image when"S" is pressed
+     cv2.imwrite('image.jpg',frame)
+     print("Image saved as grayscale.jpg")
     if cv2.waitKey(1) & 0xFF==ord('q'):
         break
 #Release the webcam and close the window
