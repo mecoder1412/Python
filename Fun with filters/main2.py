@@ -16,19 +16,17 @@ def apply_color_filter(image, filter_type):
         #Remove red and blue for red tint
         filtered_image[:, :, 2]=0#red channel to 0
         filtered_image[:, :, 0]=0#Blue channel to 0 
-    elif filter_type=="increase_red":
-        #increase the intensity of the red channel
-        filtered_image[:, :, 2]=cv2.add(filtered_image[:, :, 2],50)#Increase red channel
-    elif filter_type=="decrease_blue":
-        #decrease the intensity of the blue channel
-        filtered_image[:, :, 0]=cv2.subtract(filtered_image[:, :, 0],50)#Decrease blue channel
+    elif filter_type=="sobel":
+        gray_image=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+        sobelx=cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
+        sobely=cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
+        combined_sobel=cv2.bitwise_or(sobelx.astype('uint8'),sobely.astype('uint8'))
+        filtered_image=cv2.cvtColor(combined_sobel, cv2.COLOR_GRAY2BGR)
     elif filter_type=="canny edge":
             # Canny Edge Detection
-            print("Adjust thresholds for Canny (default: 100 and 200)")
-            lower_thresh = int(input("Enter lower threshold: "))
-            upper_thresh = int(input("Enter upper threshold: "))
-            edges = cv2.Canny(filtered_image, lower_thresh, upper_thresh)
-            return edges     
+            gray_image=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+            edges=cv2.Canny(gray_image,100 ,200) 
+            filtered_image=cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)    
     return filtered_image
 #Load the image
 image_path='example.jpg'#Provide your image path
@@ -41,8 +39,7 @@ else:
     print("r-Red Tint")  
     print("b-Blue Tint")
     print("g-Green Tint") 
-    print("i-Increased Red intensity")
-    print("d-Decreased Blue intensity")
+    print("s-Sobel")
     print("c-Canny Edge Detection") 
     print("q-Quit") 
     while True:
@@ -59,10 +56,8 @@ else:
             filter_type="blue_tint" 
         elif key==ord('g'):
             filter_type="green_tint"
-        elif key==ord('i'):
-            filter_type="increase_red"
-        elif key==ord('d'):
-            filter_type="decrease_blue"
+        elif key==ord('s'):
+            filter_type="sobel"
         elif key==ord('c'):
             filter_type="canny edge"     
         elif key==ord('q'):
