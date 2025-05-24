@@ -59,7 +59,11 @@ else:
         elif key==ord('s'):
             filter_type="sobel"
         elif key==ord('c'):
-            filter_type="canny edge"     
+            filter_type="canny edge" 
+        elif cv2.waitKey(1) & 0xFF==ord('f'):
+          #Save the processed image when"f" is pressed
+          cv2.imwrite('filtered.jpg',filtered_image)
+          print("Image saved as filtered.jpg")        
         elif key==ord('q'):
             print("Exiting...")   
             break 
